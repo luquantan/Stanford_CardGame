@@ -8,6 +8,13 @@
 
 #import "CardMatchingGame.h"
 
+
+//Defining two constants
+static const int MATCH_BONUS = 4;
+static const int MISMATCH_PENALTY = 2;
+static const int COST_TO_CHOOSE = 1;
+
+
 @interface CardMatchingGame()
 
 //Redefine "readwrite" here to allow private set/get of score
@@ -15,24 +22,36 @@
 //We need to create a data structure to store our cards
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 
-// Define 
+// Define an array of the pervious matches. This should work for both the 2 and 3 card match
+@property (strong, nonatomic) NSMutableArray *previousMatchCards;
+@property (strong, nonatomic, readwrite) NSString *previousMatchString;
 
 @end
 
+
 @implementation CardMatchingGame
 
-//Lazy instantiation of our NSMutableArray
+//Lazy instantiation of our NSMutableArray of cards
 - (NSMutableArray *)cards
 {
     if (!_cards) _cards= [[NSMutableArray alloc]init];
     return _cards;
 }
 
+//Lazy Instantiation of our NSMutableArray of perviously chosen/matched cards
+- (NSMutableArray *)previousMatchCards
+{
+    if (!_previousMatchCards) _previousMatchCards = [[NSMutableArray alloc]init];
+    return _previousMatchCards;
+}
+
+
 //This is to prevent the user from using this default init.
 - (instancetype)init
 {
     return nil;
 }
+
 
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
 {
@@ -55,10 +74,6 @@
 }
 
 
-//Defining two constants
-static const int MATCH_BONUS = 4;
-static const int MISMATCH_PENALTY = 2;
-static const int COST_TO_CHOOSE = 1;
 
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
@@ -67,29 +82,34 @@ static const int COST_TO_CHOOSE = 1;
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
+            self.previousMatchCards = nil;
         
         } else {
             
-            
+             [self.previousMatchCards addObject:card.contents];
+        
             
             for (Card *otherCard in self.cards) {
                 if (otherCard.isChosen && !otherCard.isMatched){
                     
                     int matchScore = [card match:@[otherCard]];
                     
+                    self.previousMatchString = [self createPreviousMatchString:self.previousMatchCards];
                     if (matchScore) {
                         self.score += matchScore * MATCH_BONUS;
                         card.matched = YES;
                         otherCard.matched = YES;
+                       self.previousMatchCards = nil;
                         
                     } else {
                         
                         self.score -= MISMATCH_PENALTY;
                         otherCard.chosen = NO;
+                        
+                        [self.previousMatchCards removeObject:otherCard.contents];
                     }
-                    
+                   
                     break; //can only choose 2 cards for now
-                    
                 }
             }
             
@@ -98,6 +118,7 @@ static const int COST_TO_CHOOSE = 1;
         }
     }
 }
+
 
 //To prevent user from entering index larger than the number of cards
 - (Card *)cardAtIndex:(NSUInteger)index
@@ -109,12 +130,14 @@ static const int COST_TO_CHOOSE = 1;
 
 
 //Display the result of the pervious match.
-- (NSString *)previousMatchString:(NSArray *)previousMatch
+- (NSString *)createPreviousMatchString:(NSMutableArray *)previousMatchCards
 {
-    NSString *displayString = @"";
-    
-    
+    NSMutableString *displayString = [[NSMutableString alloc] init];
+    for (NSString *contents in self.previousMatchCards) {
+        [displayString appendString:contents];
+    }
     return displayString;
+    
 }
 
 

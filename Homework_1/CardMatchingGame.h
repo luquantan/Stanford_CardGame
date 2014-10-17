@@ -25,7 +25,7 @@
 //Also, we need a method to return the state of the card, so that the UI can know what is cureently happening in the game.
 - (Card *)cardAtIndex:(NSUInteger)index;
 
-
+@property (strong, nonatomic, readonly) NSString *previousMatchString;
 
 
 
