@@ -44,7 +44,7 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender {
     NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseCardAtIndex:chosenButtonIndex];
+    [self.game chooseThreeCards:chosenButtonIndex];
     [self updateUI];
 }
 

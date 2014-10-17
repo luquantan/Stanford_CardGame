@@ -16,4 +16,6 @@
 + (NSArray *)validSuits; //Useful to make public to let people know what suits are valid
 + (NSUInteger)maxRank;
 
+
+
 @end

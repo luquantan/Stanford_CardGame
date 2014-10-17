@@ -29,12 +29,53 @@
         }
        
         
+    } else if ([otherCards count] == 2) {
+        id otherCardsOne = [otherCards firstObject];
+        id otherCardsTwo = [otherCards lastObject];
+        if ([otherCardsOne isKindOfClass:[PlayingCard class]] && [otherCardsTwo isKindOfClass:[PlayingCard class]]) {
+            
+            PlayingCard *secondCard = (PlayingCard *)otherCardsOne;
+            PlayingCard *thirdCard = (PlayingCard *)otherCardsTwo;
+            
+            if (self.rank == secondCard.rank && self.rank == thirdCard.rank && secondCard.rank == thirdCard.rank) {
+                score = 8;
+            } else if (self.suit == secondCard.suit && self.suit == thirdCard.suit && secondCard.suit == thirdCard.suit) {
+                score = 2;
+            }
+        }
     }
     return score;
 }
 
 
 
+
+
+
+
+- (int)matchThree:(NSArray *)otherCards
+{
+    int score = 0;
+    
+    if ([otherCards count] == 2) {
+        NSLog(@"otherCards is #!!!!!!!");
+        id otherCardsOne = [otherCards firstObject];
+        id otherCardsTwo = [otherCards lastObject];
+        if ([otherCardsOne isKindOfClass:[PlayingCard class]] && [otherCardsTwo isKindOfClass:[PlayingCard class]]) {
+            
+            PlayingCard *secondCard = (PlayingCard *)otherCardsOne;
+            PlayingCard *thirdCard = (PlayingCard *)otherCardsTwo;
+            
+            if (self.rank == secondCard.rank && self.rank == thirdCard.rank && secondCard.rank == thirdCard.rank) {
+                score = 8;
+            } else if (self.suit == secondCard.suit && self.suit == thirdCard.suit && secondCard.suit == thirdCard.suit) {
+                score = 2;
+            }
+        }
+    }
+    
+    return score;
+}
 
 
 //Re-defining the getter of (property contents) to give the rank and suit of a particular playing card

@@ -7,6 +7,7 @@
 //
 
 #import "CardMatchingGame.h"
+#import "PlayingCard.h"
 
 
 //Defining two constants
@@ -20,7 +21,7 @@ static const int COST_TO_CHOOSE = 1;
 //Redefine "readwrite" here to allow private set/get of score
 @property (nonatomic,readwrite) NSInteger score;
 //We need to create a data structure to store our cards
-@property (strong, nonatomic) NSMutableArray *cards; // of Card
+@property (strong, nonatomic) NSMutableArray *aDeckOfCards; // of Card
 
 // Define an array of the pervious matches. This should work for both the 2 and 3 card match
 @property (strong, nonatomic) NSMutableArray *previousMatchCards;
@@ -34,10 +35,10 @@ static const int COST_TO_CHOOSE = 1;
 @implementation CardMatchingGame
 
 //Lazy instantiation of our NSMutableArray of cards
-- (NSMutableArray *)cards
+- (NSMutableArray *)aDeckOfCards
 {
-    if (!_cards) _cards= [[NSMutableArray alloc]init];
-    return _cards;
+    if (!_aDeckOfCards) _aDeckOfCards= [[NSMutableArray alloc]init];
+    return _aDeckOfCards;
 }
 
 //Lazy Instantiation of our NSMutableArray of perviously chosen/matched cards
@@ -64,7 +65,7 @@ static const int COST_TO_CHOOSE = 1;
             Card *card = [deck drawRandomCard];
             
             if (card) {
-                [self.cards addObject:card];
+                [self.aDeckOfCards addObject:card];
             } else {
                 self = nil;
                 break;
@@ -75,7 +76,103 @@ static const int COST_TO_CHOOSE = 1;
      return self;
 }
 
+//The logic for the 3 card match game
+- (void)chooseThreeCards:(NSUInteger)index
+{
+    Card *card = [self cardAtIndex:index];
+    
+    if (!card.isMatched) {
+        
+        if (card.isChosen) {
+            card.chosen = NO; //card has been chosen but isnt matched, so un-choose it.(flip it back)
+            self.previousMatchCards = nil; //clear the perviousMatchCards array
+            
+        } else {
+            
+            [self.previousMatchCards addObject:card.contents]; //add this card's contents into the previousMatchCards array
+            
+            for (NSUInteger i = 0; i < self.aDeckOfCards.count; i++) {
+                for (NSUInteger j = i + 1n ; j < self.aDeckOfCards.count; j++) {
+                    Card *secondCard = self.aDeckOfCards[i];
+                    Card *thirdCard = self.aDeckOfCards[j];
+                    if (secondCard.isChosen && !secondCard.isMatched && thirdCard.isChosen && !thirdCard.isMatched) {
+                        
+                        //Decide if the three cards are matched or not matched. Must create a new match algorithm.
+                        int matchScore = [card matchThree:@[secondCard, thirdCard]];
+                        
+                        self.previousMatchString = [self createPreviousMatchString:self.previousMatchCards];
+                        
+                        if (matchScore) {
+                            self.score += matchScore * MATCH_BONUS;
+                            card.matched = YES;
+                            secondCard.matched = YES;
+                            thirdCard.matched = YES;
+                            self.previousMatchCards = nil;
+                            self.matchResult = [NSString stringWithFormat:@"Matched! "];
+                            
+                        } else {
+                            
+                            self.score -= MISMATCH_PENALTY;
+                            secondCard.chosen = NO;
+                            thirdCard.chosen = NO;
+                            self.matchResult = [NSString stringWithFormat:@"Wrong! "];
+                            
+                            [self.previousMatchCards removeObject:secondCard.contents];
+                            [self.previousMatchCards removeObject:thirdCard.contents];
+                        }
+                        
+                        
+                        
+                    }
+                }
+            }
+            
+//            for (Card *secondCard in self.aDeckOfCards) { //check the whole deck for a (*secondCard) that will match (*card)
+//                for (Card *thirdCard in self.aDeckOfCards) { //check the whole deck for a (*thirdCard) that will match (*card) and (*secondCard)
+//                    
+//                    if (secondCard.isChosen && !secondCard.isMatched){
+//                        if (thirdCard.isChosen && !thirdCard.isMatched) {
+//                            
+//                            //Decide if the three cards are matched or not matched. Must create a new match algorithm.
+//                            int matchScore = [card matchThree:@[secondCard, thirdCard]];
+//                            
+//                            self.previousMatchString = [self createPreviousMatchString:self.previousMatchCards];
+//                            
+//                            if (matchScore) {
+//                                self.score += matchScore * MATCH_BONUS;
+//                                card.matched = YES;
+//                                secondCard.matched = YES;
+//                                thirdCard.matched = YES;
+//                                self.previousMatchCards = nil;
+//                                self.matchResult = [NSString stringWithFormat:@"Matched! "];
+//                                
+//                            } else {
+//                                
+//                                self.score -= MISMATCH_PENALTY;
+//                                secondCard.chosen = NO;
+//                                thirdCard.chosen = NO;
+//                                self.matchResult = [NSString stringWithFormat:@"Wrong! "];
+//                                
+//                                [self.previousMatchCards removeObject:secondCard.contents];
+//                                [self.previousMatchCards removeObject:thirdCard.contents];
+//                            }
+//                            
+//                            
+//                        }
+//                    }
+//                    
+//                    
+//                }
+//            }
+            
+            card.chosen = YES;
+            self.score -= COST_TO_CHOOSE;
+            
+        }
+    }
+    
 
+}
 
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
@@ -93,12 +190,13 @@ static const int COST_TO_CHOOSE = 1;
              [self.previousMatchCards addObject:card.contents];
         
             
-            for (Card *otherCard in self.cards) {
+            for (Card *otherCard in self.aDeckOfCards) {
                 if (otherCard.isChosen && !otherCard.isMatched){
                     
                     int matchScore = [card match:@[otherCard]];
                     
                     self.previousMatchString = [self createPreviousMatchString:self.previousMatchCards];
+                    
                     if (matchScore) {
                         self.score += matchScore * MATCH_BONUS;
                         card.matched = YES;
@@ -129,7 +227,7 @@ static const int COST_TO_CHOOSE = 1;
 //To prevent user from entering index larger than the number of cards
 - (Card *)cardAtIndex:(NSUInteger)index
 {
-    return (index < [self.cards count]) ? self.cards[index] : nil;
+    return (index < [self.aDeckOfCards count]) ? self.aDeckOfCards[index] : nil;
     //This says: if "index" is less than "[self.cards count]", then return "self.cards[index]. if "index" is more than "[self.cards count]", then return "nil".
 }
 

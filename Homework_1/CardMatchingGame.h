@@ -22,6 +22,9 @@
 //Need some method to allow people/players to choose a card. Reasonable to assume player can choose an index because they initialized the deck with some "count" of cards
 - (void)chooseCardAtIndex:(NSUInteger)index;
 
+//This will contain the logic for a three card match game
+- (void)chooseThreeCards:(NSUInteger)index;
+
 //Also, we need a method to return the state of the card, so that the UI can know what is cureently happening in the game.
 - (Card *)cardAtIndex:(NSUInteger)index;
 
