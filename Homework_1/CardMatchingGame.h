@@ -26,7 +26,7 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (strong, nonatomic, readonly) NSString *previousMatchString;
-
+@property (strong, nonatomic, readonly) NSString *matchResult;
 
 
 @end

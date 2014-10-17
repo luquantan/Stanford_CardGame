@@ -25,6 +25,8 @@ static const int COST_TO_CHOOSE = 1;
 // Define an array of the pervious matches. This should work for both the 2 and 3 card match
 @property (strong, nonatomic) NSMutableArray *previousMatchCards;
 @property (strong, nonatomic, readwrite) NSString *previousMatchString;
+@property (strong, nonatomic, readwrite) NSString *matchResult;
+
 
 @end
 
@@ -82,6 +84,8 @@ static const int COST_TO_CHOOSE = 1;
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
+            
+            
             self.previousMatchCards = nil;
         
         } else {
@@ -100,11 +104,13 @@ static const int COST_TO_CHOOSE = 1;
                         card.matched = YES;
                         otherCard.matched = YES;
                        self.previousMatchCards = nil;
+                        self.matchResult = [NSString stringWithFormat:@"Matched! "];
                         
                     } else {
                         
                         self.score -= MISMATCH_PENALTY;
                         otherCard.chosen = NO;
+                        self.matchResult = [NSString stringWithFormat:@"Wrong! "];
                         
                         [self.previousMatchCards removeObject:otherCard.contents];
                     }
@@ -140,6 +146,19 @@ static const int COST_TO_CHOOSE = 1;
     
 }
 
+- (NSString *)matchResult
+{
+    if (!_matchResult) {
+        _matchResult = @"";
+    }
+    return _matchResult;
+}
 
-
+- (NSString *)previousMatchString
+{
+    if (!_previousMatchString) {
+        _previousMatchString = @"";
+    }
+    return _previousMatchString;
+}
 @end

@@ -58,10 +58,19 @@
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
-
-        self.previousMatchLabel.text = self.game.previousMatchString;
+        
+        
     }
+    NSMutableString *displayResult = [[NSMutableString alloc]initWithString:@""];
+    [displayResult appendString:self.game.matchResult];
+    
+    [displayResult appendString:self.game.previousMatchString];
+    self.previousMatchLabel.text = displayResult;
+    
+
 }
+
+
 
 
 //Helper methods to set the title and background image of UIButton depending on whether it is chosen or not
