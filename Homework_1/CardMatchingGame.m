@@ -127,44 +127,6 @@ static const int COST_TO_CHOOSE = 1;
                 }
             }
             
-//            for (Card *secondCard in self.aDeckOfCards) { //check the whole deck for a (*secondCard) that will match (*card)
-//                for (Card *thirdCard in self.aDeckOfCards) { //check the whole deck for a (*thirdCard) that will match (*card) and (*secondCard)
-//                    
-//                    if (secondCard.isChosen && !secondCard.isMatched){
-//                        if (thirdCard.isChosen && !thirdCard.isMatched) {
-//                            
-//                            //Decide if the three cards are matched or not matched. Must create a new match algorithm.
-//                            int matchScore = [card matchThree:@[secondCard, thirdCard]];
-//                            
-//                            self.previousMatchString = [self createPreviousMatchString:self.previousMatchCards];
-//                            
-//                            if (matchScore) {
-//                                self.score += matchScore * MATCH_BONUS;
-//                                card.matched = YES;
-//                                secondCard.matched = YES;
-//                                thirdCard.matched = YES;
-//                                self.previousMatchCards = nil;
-//                                self.matchResult = [NSString stringWithFormat:@"Matched! "];
-//                                
-//                            } else {
-//                                
-//                                self.score -= MISMATCH_PENALTY;
-//                                secondCard.chosen = NO;
-//                                thirdCard.chosen = NO;
-//                                self.matchResult = [NSString stringWithFormat:@"Wrong! "];
-//                                
-//                                [self.previousMatchCards removeObject:secondCard.contents];
-//                                [self.previousMatchCards removeObject:thirdCard.contents];
-//                            }
-//                            
-//                            
-//                        }
-//                    }
-//                    
-//                    
-//                }
-//            }
-            
             card.chosen = YES;
             self.score -= COST_TO_CHOOSE;
             

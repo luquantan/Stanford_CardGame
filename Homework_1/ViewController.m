@@ -17,6 +17,8 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *previousMatchLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+
 
 @end
 
@@ -44,13 +46,24 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender {
     NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseThreeCards:chosenButtonIndex];
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        [self.game chooseCardAtIndex:chosenButtonIndex];
+    } else {
+        [self.game chooseThreeCards:chosenButtonIndex];
+    }
+    
     [self updateUI];
 }
 
 - (void)updateUI
 {
     for (UIButton *cardButton in self.cardButtons){
+        
+        if (self.game.score) {
+            self.segmentedControl.enabled = NO;
+        } else if (self.game.score == 0) {
+            self.segmentedControl.enabled = YES;
+        }
         
         NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
@@ -71,6 +84,12 @@
 }
 
 
+
+- (IBAction)buttonDidPress:(UIButton *)sender
+{
+    self.game = nil;
+    [self updateUI];
+}
 
 
 //Helper methods to set the title and background image of UIButton depending on whether it is chosen or not
