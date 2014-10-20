@@ -61,8 +61,6 @@
         
         if (self.game.score) {
             self.segmentedControl.enabled = NO;
-        } else if (self.game.score == 0) {
-            self.segmentedControl.enabled = YES;
         }
         
         NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
@@ -89,6 +87,7 @@
 {
     self.game = nil;
     [self updateUI];
+    self.segmentedControl.enabled = YES;
 }
 
 
