@@ -19,6 +19,6 @@
 
 -(int)match:(NSArray *)otherCards;
 
-- (int)matchThree:(NSArray *)otherCards;
+
 
 @end

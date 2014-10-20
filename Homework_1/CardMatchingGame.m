@@ -92,13 +92,13 @@ static const int COST_TO_CHOOSE = 1;
             [self.previousMatchCards addObject:card.contents]; //add this card's contents into the previousMatchCards array
             
             for (NSUInteger i = 0; i < self.aDeckOfCards.count; i++) {
-                for (NSUInteger j = i + 1n ; j < self.aDeckOfCards.count; j++) {
+                for (NSUInteger j = i + 1 ; j < self.aDeckOfCards.count; j++) {
                     Card *secondCard = self.aDeckOfCards[i];
                     Card *thirdCard = self.aDeckOfCards[j];
                     if (secondCard.isChosen && !secondCard.isMatched && thirdCard.isChosen && !thirdCard.isMatched) {
                         
                         //Decide if the three cards are matched or not matched. Must create a new match algorithm.
-                        int matchScore = [card matchThree:@[secondCard, thirdCard]];
+                        int matchScore = [card match:@[secondCard, thirdCard]];
                         
                         self.previousMatchString = [self createPreviousMatchString:self.previousMatchCards];
                         
