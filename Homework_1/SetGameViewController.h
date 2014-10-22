@@ -7,8 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "SetGameCardDeck.h"
-#import "SetGameCard.h"
+
 
 @interface SetGameViewController : ViewController
 

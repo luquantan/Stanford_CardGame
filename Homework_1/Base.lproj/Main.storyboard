@@ -427,7 +427,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonDidPress:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Yri-F9-G14"/>
+                                    <action selector="reDealButtonIsPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="k2T-c0-Mxg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -605,7 +605,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="67" y="31"/>
+            <point key="canvasLocation" x="-371" y="-1599"/>
         </scene>
     </scenes>
     <resources>

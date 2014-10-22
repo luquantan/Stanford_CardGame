@@ -20,7 +20,7 @@
 @property (nonatomic,readonly) NSInteger score;
 
 //Need some method to allow people/players to choose a card. Reasonable to assume player can choose an index because they initialized the deck with some "count" of cards
-- (void)chooseCardAtIndex:(NSUInteger)index;
+- (void)chooseTwoCards:(NSUInteger)index;
 
 //This will contain the logic for a three card match game
 - (void)chooseThreeCards:(NSUInteger)index;
@@ -29,6 +29,7 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (strong, nonatomic, readonly) NSString *previousMatchString;
+@property (strong,nonatomic, readonly) NSString *temporaryDisplayResult;
 @property (strong, nonatomic, readonly) NSString *matchResult;
 
 

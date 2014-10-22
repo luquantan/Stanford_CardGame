@@ -10,6 +10,7 @@
 
 @implementation PlayingCard
 
+//This match algorithm works for both two and three card matching
 - (int)match:(NSArray *)otherCards
 {
     int score = 0;
@@ -38,44 +39,14 @@
             PlayingCard *thirdCard = (PlayingCard *)otherCardsTwo;
             
             if (self.rank == secondCard.rank && self.rank == thirdCard.rank && secondCard.rank == thirdCard.rank) {
-                score = 8;
+                score = 12;
             } else if (self.suit == secondCard.suit && self.suit == thirdCard.suit && secondCard.suit == thirdCard.suit) {
-                score = 2;
+                score = 4;
             }
         }
     }
     return score;
 }
-
-
-
-
-
-
-//
-//- (int)matchThree:(NSArray *)otherCards
-//{
-//    int score = 0;
-//    
-//    if ([otherCards count] == 2) {
-//        NSLog(@"otherCards is #!!!!!!!");
-//        id otherCardsOne = [otherCards firstObject];
-//        id otherCardsTwo = [otherCards lastObject];
-//        if ([otherCardsOne isKindOfClass:[PlayingCard class]] && [otherCardsTwo isKindOfClass:[PlayingCard class]]) {
-//            
-//            PlayingCard *secondCard = (PlayingCard *)otherCardsOne;
-//            PlayingCard *thirdCard = (PlayingCard *)otherCardsTwo;
-//            
-//            if (self.rank == secondCard.rank && self.rank == thirdCard.rank && secondCard.rank == thirdCard.rank) {
-//                score = 8;
-//            } else if (self.suit == secondCard.suit && self.suit == thirdCard.suit && secondCard.suit == thirdCard.suit) {
-//                score = 2;
-//            }
-//        }
-//    }
-//    
-//    return score;
-//}
 
 
 //Re-defining the getter of (property contents) to give the rank and suit of a particular playing card
@@ -85,11 +56,6 @@
     return [rankStrings[self.rank] stringByAppendingString:self.suit];
     
 }
-
-
-
-
-
 
 @synthesize suit = _suit;
 //We can make the code cleaner by adding class methods(start with +) to create the arrays needed
@@ -121,11 +87,6 @@
 //    }
     return _suit != nil ? _suit : @"?";
 }
-
-
-
-
-
 
 //Tells the user of the max Rank value(0-13), hence count of validRanks - 1.
 + (NSUInteger)maxRank

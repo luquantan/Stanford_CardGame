@@ -7,24 +7,26 @@
 //
 
 #import "SetGameViewController.h"
+#import "SetGameCardDeck.h"
+#import "SetGameCard.h"
 
 @interface SetGameViewController ()
 
-@property (strong, nonatomic) SetGameCardDeck *deckOfSetGameCards;
+
+//Properties that are SetGameCard specific
+//Have outlet from some scoreLabel
+//Have outlet from some previousMatchLabel
+//Have outlet from some cardButtons
 
 @end
 
 @implementation SetGameViewController
 
 
--(void)generateDeckOfSetGameCards{
-    
-    if (!_deckOfSetGameCards) {
-        _deckOfSetGameCards = [[SetGameCardDeck alloc]init];
-    }
+//createDeck specific to a SetGameCardDeck
+-(Deck *)createDeck{
+    return [[SetGameCardDeck alloc]init];
 }
-
-
 
 
 - (void)viewDidLoad {
