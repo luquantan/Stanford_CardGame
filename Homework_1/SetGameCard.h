@@ -11,11 +11,50 @@
 @interface SetGameCard : Card
 
 //Corresponds to the different card types in Set
-@property (strong, nonatomic) NSString *colorOfCard;
-@property (strong, nonatomic) NSAttributedString *fill;
-@property (strong, nonatomic) NSMutableString *symbolOfCard;
+
+//@property (strong, nonatomic) NSMutableArray *symbolOfCard;
+
+typedef NS_ENUM(NSInteger, SetGameCardColorType)
+{
+    SetGameCardColorType1,
+    SetGameCardColorType2,
+    SetGameCardColorType3,
+    enum_countOfColorType
+};
+
+typedef NS_ENUM(NSInteger, SetGameCardSymbolAmount)
+{
+    SetGameCardSymbolAmount1,
+    SetGameCardSymbolAmount2,
+    SetGameCardSymbolAmount3,
+    enum_countOfSymbolAmount
+};
+
+typedef NS_ENUM(NSInteger, SetGameCardFillType)
+{
+    SetGameCardFillType1,
+    SetGameCardFillType2,
+    SetGameCardFillType3,
+    enum_countOfFillType
+};
+
+typedef NS_ENUM(NSInteger, SetGameCardSymbolType)
+{
+    SetGameCardSymbolType1,
+    SetGameCardSymbolType2,
+    SetGameCardSymbolType3,
+    enum_countOfSymbolType
+};
 
 
-+ (NSArray *)validSymbols;
+@property (nonatomic) SetGameCardColorType symbolColorOnCard;
+@property (nonatomic) SetGameCardSymbolAmount symbolAmountOnCard;
+@property (nonatomic) SetGameCardFillType symbolFillOnCard;
+@property (nonatomic) SetGameCardSymbolType symbolTypeOnCard;
+
+
+
+
+//+ (NSArray *)validSymbols;
 
 @end

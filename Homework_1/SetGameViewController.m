@@ -1,38 +1,40 @@
 //
-//  PlayingCardGameViewController.m
+//  SetGameViewController.m
 //  Homework_1
 //
-//  Created by LuQuan Intrepid on 10/20/14.
+//  Created by LuQuan Intrepid on 10/22/14.
 //  Copyright (c) 2014 LuQuanTan. All rights reserved.
 //
 
-#import "PlayingCardGameViewController.h"
-#import "PlayingCardDeck.h"
-#import "SetGameCardDeck.h"
+#import "SetGameViewController.h"
 
-@interface PlayingCardGameViewController ()
+@interface SetGameViewController ()
 
-
+@property (strong, nonatomic) SetGameCardDeck *deckOfSetGameCards;
 
 @end
 
-@implementation PlayingCardGameViewController
+@implementation SetGameViewController
+
+
+-(void)generateDeckOfSetGameCards{
+    
+    if (!_deckOfSetGameCards) {
+        _deckOfSetGameCards = [[SetGameCardDeck alloc]init];
+    }
+}
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-- (Deck *)createDeck
-{
-    return [[PlayingCardDeck alloc]init];
 }
 
 /*
@@ -44,9 +46,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-
-
-
 
 @end

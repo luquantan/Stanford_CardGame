@@ -12,24 +12,36 @@
 
 
 
+
 @end
+
 
 @implementation SetGameCard
 
-//These are the symbols for the set game
-+ (NSArray *)validSymbols
-{
-    return @[@"∫",@"⩍",@"+"];
-}
 
-//Re-define the setter to only the validSymbols
-- (void)setSymbolOfCard:(NSMutableString *)symbolOfCard
-{
-    if ([[[self class] validSymbols] containsObject:symbolOfCard]) {
-        
-        _symbolOfCard = symbolOfCard;
-    }
-}
 
+
+
+
+
+
+
+
+
+////These are the symbols for the set game
+//+ (NSArray *)validSymbols
+//{
+//    return @[@"∫",@"⩍",@"+"];
+//}
+
+////Re-define the setter to only the validSymbols
+//- (void)setSymbolOfCard:(NSMutableString *)symbolOfCard
+//{
+//    if ([[[self class] validSymbols] containsObject:symbolOfCard]) {
+//        
+//        _symbolOfCard = symbolOfCard;
+//    }
+//}
+//
 
 @end

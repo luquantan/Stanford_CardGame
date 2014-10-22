@@ -23,6 +23,12 @@ static const int COST_TO_CHOOSE = 1;
 //We need to create a data structure to store our cards
 @property (strong, nonatomic) NSMutableArray *aDeckOfCards; // of Card
 
+
+
+
+
+
+
 // Define an array of the pervious matches. This should work for both the 2 and 3 card match
 @property (strong, nonatomic) NSMutableArray *previousMatchCards;
 @property (strong, nonatomic, readwrite) NSString *previousMatchString;
@@ -40,6 +46,7 @@ static const int COST_TO_CHOOSE = 1;
     if (!_aDeckOfCards) _aDeckOfCards= [[NSMutableArray alloc]init];
     return _aDeckOfCards;
 }
+
 
 //Lazy Instantiation of our NSMutableArray of perviously chosen/matched cards
 - (NSMutableArray *)previousMatchCards

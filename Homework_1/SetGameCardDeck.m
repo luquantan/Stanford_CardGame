@@ -12,45 +12,62 @@
 @implementation SetGameCardDeck
 
 
-- (NSString *)makeSomeNumberOfCards:(SetGameCard *)card someNumber:(NSInteger)someNumber
-{
-    NSString *someNumberOfCards = @"";
-    
-    switch (someNumber)
-    {
-        case 1:
-            someNumberOfCards = [NSString stringWithFormat:@"%@",card.symbolOfCard];
-            break;
-        case 2:
-            someNumberOfCards = [NSString stringWithFormat:@"%@%@",card.symbolOfCard, card.symbolOfCard];
-        case 3:
-            someNumberOfCards = [NSString stringWithFormat:@"%@%@%@", card.symbolOfCard, card.symbolOfCard, card.symbolOfCard];
-        default:
-            break;
-    }
-    
+//
+//- (NSString *)makeSomeNumberOfCards:(SetGameCard *)card someNumber:(NSInteger)someNumber
+//{
+//    NSString *someNumberOfCards = @"";
+//    
+//    switch (someNumber)
+//    {
+//        case 1:
+//            someNumberOfCards = [NSString stringWithFormat:@"%@",card.symbolOfCard];
+//            break;
+//        case 2:
+//            someNumberOfCards = [NSString stringWithFormat:@"%@%@",card.symbolOfCard, card.symbolOfCard];
+//        case 3:
+//            someNumberOfCards = [NSString stringWithFormat:@"%@%@%@", card.symbolOfCard, card.symbolOfCard, card.symbolOfCard];
+//        default:
+//            break;
+//    }
+//    
+//
+//    return someNumberOfCards;
+//}
 
-    return someNumberOfCards;
-}
 
+//Create a custom initializer to properly generate a deck of SetGameCards
 - (instancetype)init
 {
     self = [super init];
     
+    SetGameCard *card = [[SetGameCard alloc]init];
     
-    //I have no idea what I am doing here.
+    int count = 0;
     
-//    if (self) {
-//        for (NSString *symbolOfCard in [SetGameCard validSymbols]) {
-//            for (int i = 0; i <= 3; i++) {
-//                SetGameCard *card = [[SetGameCard alloc]init];
-//                
-//                card.symbolOfCard = [self makeSomeNumberOfCards:card.symbolOfCard someNumber:i];
-//            }
-//        }
-//        
-//    }
-    
+    if (self) {
+        for (int i = 0; i < enum_countOfColorType; i++) {
+            for (int j = 0; j < enum_countOfSymbolAmount; j++) {
+                for (int k = 0; k < enum_countOfFillType; k++) {
+                    for (int l = 0; l < enum_countOfSymbolType; l++) {
+                        
+                        card.symbolColorOnCard = i;
+                        card.symbolAmountOnCard = j;
+                        card.symbolFillOnCard = k;
+                        card.symbolTypeOnCard = l;
+                        [self addCard:card];
+                        
+                        
+                        count++;
+                        printf("This is the %i card\n", count);
+                        
+                        
+                        
+                    }
+                }
+            }
+        }
+        
+    }
     return self;
 }
 
