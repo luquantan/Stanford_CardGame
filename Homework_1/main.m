@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "SetGameCard.h"
+#import "SetGameCardDeck.h"
+#import "CardMatchingGame.h"
+
+
+
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+        
+        
+
     }
 }
+

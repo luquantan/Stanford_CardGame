@@ -18,8 +18,12 @@
 
 @implementation SetGameCard
 
-
-
+//Overriding the getter of the super class
+//- (NSString *)contents
+//{
+//    NSString *stringOfProperties = @"";
+//
+//}
 
 
 

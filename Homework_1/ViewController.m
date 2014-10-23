@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
+#import "SetGameCardDeck.h"
+#import "SetGameCard.h"
 
 
 @interface ViewController ()
@@ -18,13 +20,42 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *previousMatchLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) NSMutableArray *matchHistory;
+@property (weak, nonatomic) IBOutlet UISlider *pastMatchSlider;
+
+@property (strong, nonatomic) Card *randomCard;
+@property (strong, nonatomic) Deck *setgamedeck;
+
 
 
 @end
 
 @implementation ViewController
 
+//Lazy load of matchHistory
+- (NSMutableArray *)matchHistory
+{
+    if (!_matchHistory) {
+        _matchHistory = [[NSMutableArray alloc]init];
+        
+        }
+    
+    return _matchHistory;
+}
 
+////Lazy Load of CardMatchingGame
+//-(void)returnTheOutputOfCallingAnEnum
+//{
+//   
+//    CardMatchingGame *game1 = [[CardMatchingGame alloc]init];
+//    Deck *setgamedeck = [[SetGameCardDeck alloc]init];
+//    
+//    Card *randomCard = setgamedeck.drawRandomCard;
+//    
+////    NSLog(@"%i", self.game card.symbol)
+//
+//    
+//}
 
 //Lazy Load of CardMatchingGame
 -(CardMatchingGame *)game
@@ -32,6 +63,8 @@
     if(!_game) {
         _game = [[CardMatchingGame alloc]initWithCardCount:[self.cardButtons count]
                                                  usingDeck:[self createDeck]];
+        
+
     }
     
     return _game;
@@ -59,11 +92,37 @@
     [self updateUI];
 }
 
+//Set the slider range to expand everytime a new match history is added
+- (void)setSliderRange
+{
+    NSUInteger numberOfMatches = [self.matchHistory count] - 1;
+    self.pastMatchSlider.maximumValue = numberOfMatches;
+    [self.pastMatchSlider setValue:numberOfMatches animated:YES];
+}
+
+//Change the displayResult when the slider is moved.
+- (IBAction)changeSlider:(UISlider *)sender {
+    NSUInteger sliderValue;
+    sliderValue = lroundf(self.pastMatchSlider.value);
+    [self.pastMatchSlider setValue:sliderValue animated:NO];
+    
+    if ([self.matchHistory count]) {
+        if (sliderValue + 1 < [self.matchHistory count]) {
+            self.previousMatchLabel.alpha = 0.6;
+        } else {
+            self.previousMatchLabel.alpha = 1.0;
+        }
+
+        self.previousMatchLabel.text = [self.matchHistory objectAtIndex:sliderValue];
+    }
+}
+
 
 //When reDeal button is pressed, "nil" the current game and update UI (which is will re-init another game)
 - (IBAction)reDealButtonIsPressed:(UIButton *)sender
 {
     self.game = nil;
+    self.matchHistory = nil;
     [self updateUI];
     self.segmentedControl.enabled = YES;
 }
@@ -75,6 +134,8 @@
         
         if (self.game.score) {
             self.segmentedControl.enabled = NO; //disable segmentedControl when game starts
+            
+
         }
         
         NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
@@ -86,12 +147,23 @@
         
         
     }
-//    self.previousMatchLabel.text = self.game.temporaryDisplayResult;
-//    NSLog(@"temporaryDisplayResult shoudl run");
+    
+    self.previousMatchLabel.alpha = 1.0;
     NSMutableString *displayResult = [[NSMutableString alloc]initWithString:@""];
+    
+//    self.previousMatchLabel.text = self.game.temporaryDisplayResult;
+//    NSLog(@"temporaryDisplayResult should run");
+    
+
     [displayResult appendString:self.game.matchResult];
     [displayResult appendString:self.game.previousMatchString];
     self.previousMatchLabel.text = displayResult;
+    
+    if (![displayResult isEqualToString:@""] && ![[self.matchHistory lastObject] isEqualToString:displayResult]) {
+        [self.matchHistory addObject:displayResult];
+        [self setSliderRange];
+    }
+    
     
     
 }
